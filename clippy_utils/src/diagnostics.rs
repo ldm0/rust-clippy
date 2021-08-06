@@ -14,7 +14,13 @@ use rustc_lint::{LateContext, Lint, LintContext};
 use rustc_span::source_map::{MultiSpan, Span};
 use std::env;
 
+static LARK_LINTS: &[&str] = &["clippy::match_in_field_init", "clippy::refcell_borrow"];
+
 fn docs_link(diag: &mut DiagnosticBuilder<'_>, lint: &'static Lint) {
+    if LARK_LINTS.contains(&lint.name_lower().as_str()) {
+        diag.help("for further information visit https://bytedance.feishu.cn/docs/doccnpKqcz51hFBNLg5yvIIDPJb");
+        return;
+    }
     if env::var("CLIPPY_DISABLE_DOCS_LINKS").is_err() {
         if let Some(lint) = lint.name_lower().strip_prefix("clippy::") {
             diag.help(&format!(

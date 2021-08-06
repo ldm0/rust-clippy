@@ -85,6 +85,7 @@ store.register_group(true, "clippy::all", Some("clippy_all"), vec![
     LintId::of(inherent_to_string::INHERENT_TO_STRING_SHADOW_DISPLAY),
     LintId::of(init_numbered_fields::INIT_NUMBERED_FIELDS),
     LintId::of(inline_fn_without_body::INLINE_FN_WITHOUT_BODY),
+    LintId::of(instant_sub::INSTANT_SUB),
     LintId::of(int_plus_one::INT_PLUS_ONE),
     LintId::of(large_const_arrays::LARGE_CONST_ARRAYS),
     LintId::of(large_enum_variant::LARGE_ENUM_VARIANT),

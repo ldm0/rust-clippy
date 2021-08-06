@@ -3033,6 +3033,7 @@ Released 2018-09-13
 [`inline_asm_x86_intel_syntax`]: https://rust-lang.github.io/rust-clippy/master/index.html#inline_asm_x86_intel_syntax
 [`inline_fn_without_body`]: https://rust-lang.github.io/rust-clippy/master/index.html#inline_fn_without_body
 [`inspect_for_each`]: https://rust-lang.github.io/rust-clippy/master/index.html#inspect_for_each
+[`instant_sub`]: https://rust-lang.github.io/rust-clippy/master/index.html#instant_sub
 [`int_plus_one`]: https://rust-lang.github.io/rust-clippy/master/index.html#int_plus_one
 [`integer_arithmetic`]: https://rust-lang.github.io/rust-clippy/master/index.html#integer_arithmetic
 [`integer_division`]: https://rust-lang.github.io/rust-clippy/master/index.html#integer_division
@@ -3097,6 +3098,7 @@ Released 2018-09-13
 [`map_unwrap_or`]: https://rust-lang.github.io/rust-clippy/master/index.html#map_unwrap_or
 [`match_as_ref`]: https://rust-lang.github.io/rust-clippy/master/index.html#match_as_ref
 [`match_bool`]: https://rust-lang.github.io/rust-clippy/master/index.html#match_bool
+[`match_in_field_init`]: https://rust-lang.github.io/rust-clippy/master/index.html#match_in_field_init
 [`match_like_matches_macro`]: https://rust-lang.github.io/rust-clippy/master/index.html#match_like_matches_macro
 [`match_on_vec_items`]: https://rust-lang.github.io/rust-clippy/master/index.html#match_on_vec_items
 [`match_overlapping_arm`]: https://rust-lang.github.io/rust-clippy/master/index.html#match_overlapping_arm
@@ -3228,6 +3230,7 @@ Released 2018-09-13
 [`redundant_static_lifetimes`]: https://rust-lang.github.io/rust-clippy/master/index.html#redundant_static_lifetimes
 [`ref_binding_to_reference`]: https://rust-lang.github.io/rust-clippy/master/index.html#ref_binding_to_reference
 [`ref_option_ref`]: https://rust-lang.github.io/rust-clippy/master/index.html#ref_option_ref
+[`refcell_borrow`]: https://rust-lang.github.io/rust-clippy/master/index.html#refcell_borrow
 [`regex_macro`]: https://rust-lang.github.io/rust-clippy/master/index.html#regex_macro
 [`repeat_once`]: https://rust-lang.github.io/rust-clippy/master/index.html#repeat_once
 [`replace_consts`]: https://rust-lang.github.io/rust-clippy/master/index.html#replace_consts
@@ -3270,6 +3273,7 @@ Released 2018-09-13
 [`string_add_assign`]: https://rust-lang.github.io/rust-clippy/master/index.html#string_add_assign
 [`string_extend_chars`]: https://rust-lang.github.io/rust-clippy/master/index.html#string_extend_chars
 [`string_from_utf8_as_bytes`]: https://rust-lang.github.io/rust-clippy/master/index.html#string_from_utf8_as_bytes
+[`string_indexing_slicing`]: https://rust-lang.github.io/rust-clippy/master/index.html#string_indexing_slicing
 [`string_lit_as_bytes`]: https://rust-lang.github.io/rust-clippy/master/index.html#string_lit_as_bytes
 [`string_slice`]: https://rust-lang.github.io/rust-clippy/master/index.html#string_slice
 [`string_to_string`]: https://rust-lang.github.io/rust-clippy/master/index.html#string_to_string

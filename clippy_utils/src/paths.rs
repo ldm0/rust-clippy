@@ -211,3 +211,7 @@ pub const WRITE_MACRO: [&str; 3] = ["core", "macros", "write"];
 #[allow(clippy::invalid_paths)] // `check_path` does not seem to work for macros
 pub const WRITELN_MACRO: [&str; 3] = ["core", "macros", "writeln"];
 pub const PTR_NON_NULL: [&str; 4] = ["core", "ptr", "non_null", "NonNull"];
+pub const REFCELL_BORROW: [&str; 4] = ["core", "cell", "RefCell", "borrow"];
+pub const REFCELL_BORROWMUT: [&str; 4] = ["core", "cell", "RefCell", "borrow_mut"];
+pub const INSTANT: [&str; 3] = ["std", "time", "Instant"];
+pub const STRING: [&str; 3] = ["alloc", "string", "String"];

@@ -34,6 +34,11 @@ use rustc_span::{sym, symbol::kw};
 use std::cmp::Ordering;
 use std::collections::hash_map::Entry;
 
+mod refcell;
+mod struct_init;
+pub use refcell::REFCELL_BORROW;
+pub use struct_init::MATCH_IN_FIELD_INIT;
+
 declare_clippy_lint! {
     /// ### What it does
     /// Checks for matches with a single arm where an `if let`
@@ -611,6 +616,8 @@ impl_lint_pass!(Matches => [
     REDUNDANT_PATTERN_MATCHING,
     MATCH_LIKE_MATCHES_MACRO,
     MATCH_SAME_ARMS,
+    MATCH_IN_FIELD_INIT,
+    REFCELL_BORROW,
 ]);
 
 impl<'tcx> LateLintPass<'tcx> for Matches {
@@ -619,6 +626,7 @@ impl<'tcx> LateLintPass<'tcx> for Matches {
             return;
         }
 
+        struct_init::check_struct_init(cx, expr);
         redundant_pattern_match::check(cx, expr);
 
         if meets_msrv(self.msrv.as_ref(), &msrvs::MATCHES_MACRO) {
@@ -646,6 +654,21 @@ impl<'tcx> LateLintPass<'tcx> for Matches {
         }
         if let ExprKind::Match(ex, arms, _) = expr.kind {
             check_match_ref_pats(cx, ex, arms.iter().map(|el| el.pat), expr);
+            refcell::check_match_refcell_borrow(
+                cx,
+                ex,
+                "temporary borrow inside scrutinee will last until the end of the match expression",
+            );
+        }
+
+        if let ExprKind::Call(_, args) = &expr.kind {
+            for e in args.iter() {
+                refcell::check_match_refcell_borrow(
+                    cx,
+                    e,
+                    "temporary borrow will last until the end of the calling of this function",
+                );
+            }
         }
     }
 

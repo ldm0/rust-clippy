@@ -3,6 +3,9 @@
 use clippy_utils::consts::{constant, Constant};
 use clippy_utils::diagnostics::{span_lint, span_lint_and_help};
 use clippy_utils::higher;
+use clippy_utils::paths;
+use clippy_utils::ty::*;
+
 use rustc_ast::ast::RangeLimits;
 use rustc_hir::{Expr, ExprKind};
 use rustc_lint::{LateContext, LateLintPass};
@@ -92,12 +95,69 @@ declare_clippy_lint! {
     "indexing/slicing usage"
 }
 
-declare_lint_pass!(IndexingSlicing => [INDEXING_SLICING, OUT_OF_BOUNDS_INDEXING]);
+declare_clippy_lint! {
+    /// ### What it does
+    /// Checks for out of bounds string indexing with a range.
+    ///
+    /// ### Why is this bad?
+    /// This will always panic at runtime.
+    ///
+    /// ### Known problems
+    /// Slicing with range on non-ascii string will panic at runtime.
+    ///
+    /// ### Example
+    /// ```no_run
+    /// # #![allow(const_err)]
+    /// let x = String::from("你好");
+    ///
+    /// // Bad
+    /// &x[..1];
+    ///
+    /// // Good
+    /// x.get(..1);
+    /// ```
+    pub STRING_INDEXING_SLICING,
+    restriction,
+    "byte index is not a char boundary"
+}
+
+declare_lint_pass!(IndexingSlicing => [INDEXING_SLICING, OUT_OF_BOUNDS_INDEXING, STRING_INDEXING_SLICING]);
 
 impl<'tcx> LateLintPass<'tcx> for IndexingSlicing {
     fn check_expr(&mut self, cx: &LateContext<'tcx>, expr: &'tcx Expr<'_>) {
         if let ExprKind::Index(array, index) = &expr.kind {
             let ty = cx.typeck_results().expr_ty(array).peel_refs();
+            {
+                let is_str = if let ty::Ref(_, ty, _) = &ty.kind() {
+                    ty.is_str()
+                } else {
+                    false
+                };
+
+                if is_str || match_type(cx, ty, &paths::STRING) {
+                    let index_ty = cx.typeck_results().expr_ty(index);
+                    match &index_ty.kind() {
+                        ty::Adt(_, substs) if !substs.is_empty() => {
+                            if let ty::Uint(ty::UintTy::Usize) = &substs.type_at(0).kind() {
+                                span_lint_and_help(
+                                    cx,
+                                    STRING_INDEXING_SLICING,
+                                    index.span,
+                                    "byte index is not a char boundary",
+                                    None,
+                                    &format!(
+                                        "Consider using `.get({RANGE})` or `.get_mut({RANGE})` instead",
+                                        RANGE = clippy_utils::source::snippet(cx, index.span, "..")
+                                    ),
+                                );
+                                return;
+                            }
+                        },
+                        _ => {},
+                    }
+                }
+            }
+
             if let Some(range) = higher::Range::hir(index) {
                 // Ranged indexes, i.e., &x[n..m], &x[n..], &x[..n] and &x[..]
                 if let ty::Array(_, s) = ty.kind() {

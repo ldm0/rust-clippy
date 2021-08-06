@@ -58,6 +58,7 @@ store.register_group(true, "clippy::pedantic", Some("clippy_pedantic"), vec![
     LintId::of(matches::MATCH_WILDCARD_FOR_SINGLE_VARIANTS),
     LintId::of(matches::MATCH_WILD_ERR_ARM),
     LintId::of(matches::SINGLE_MATCH_ELSE),
+    LintId::of(matches::struct_init::MATCH_IN_FIELD_INIT),
     LintId::of(methods::CLONED_INSTEAD_OF_COPIED),
     LintId::of(methods::FILTER_MAP_NEXT),
     LintId::of(methods::FLAT_MAP_OPTION),
