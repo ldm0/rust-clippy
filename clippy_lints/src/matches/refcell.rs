@@ -30,7 +30,7 @@ declare_clippy_lint! {
 use super::*;
 pub fn check_match_refcell_borrow<'tcx>(cx: &LateContext<'tcx>, expr: &'tcx Expr<'_>, msg: &str) {
     match &expr.kind {
-        ExprKind::MethodCall(_, _, args, _) => {
+        ExprKind::MethodCall(_, args, _) => {
             if let [arg] = &**args {
                 let method_def_id = cx.typeck_results().type_dependent_def_id(expr.hir_id).unwrap();
                 if match_def_path(cx, method_def_id, &paths::REFCELL_BORROW)

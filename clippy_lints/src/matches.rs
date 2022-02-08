@@ -34,8 +34,8 @@ use rustc_span::{sym, symbol::kw};
 use std::cmp::Ordering;
 use std::collections::hash_map::Entry;
 
-mod refcell;
-mod struct_init;
+pub mod refcell;
+pub mod struct_init;
 pub use refcell::REFCELL_BORROW;
 pub use struct_init::MATCH_IN_FIELD_INIT;
 

@@ -274,8 +274,6 @@ mod map_unit_fn;
 mod match_on_vec_items;
 mod match_result_ok;
 mod match_str_case_mismatch;
-mod matches::refcell;
-mod matches::struct_init;
 mod matches;
 mod mem_forget;
 mod mem_replace;
